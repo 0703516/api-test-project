@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>API 自动化测试报告 - Allure Style</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #333; }
+.header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px 40px; }
+.header h1 { font-size: 24px; margin-bottom: 8px; }
+.header .subtitle { opacity: 0.85; font-size: 14px; }
+.stats { display: flex; gap: 20px; padding: 30px 40px; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.06); flex-wrap: wrap; }
+.stat-card { flex: 1; min-width: 160px; text-align: center; padding: 20px; border-radius: 12px; background: #f8f9fc; }
+.stat-card .number { font-size: 36px; font-weight: 700; margin-bottom: 4px; }
+.stat-card .label { color: #888; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; }
+.stat-card.pass .number { color: #4CAF50; }
+.stat-card.fail .number { color: #F44336; }
+.stat-card.total .number { color: #2196F3; }
+.stat-card.rate .number { color: #4CAF50; }
+.ring-wrap { display: flex; justify-content: center; align-items: center; }
+.ring { width: 120px; height: 120px; border-radius: 50%; position: relative; display: flex; align-items: center; justify-content: center; }
+.ring svg { transform: rotate(-90deg); width: 120px; height: 120px; }
+.ring circle { fill: none; stroke-width: 10; }
+.ring .bg { stroke: #e0e0e0; }
+.ring .fg { stroke: #4CAF50; stroke-linecap: round; transition: stroke-dashoffset 1s ease; }
+.ring .inner { position: absolute; font-size: 28px; font-weight: 700; color: #4CAF50; }
+.container { max-width: 1200px; margin: 0 auto; padding: 30px 40px; }
+.section { background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 24px; overflow: hidden; }
+.section h2 { padding: 18px 24px; font-size: 16px; border-bottom: 1px solid #f0f0f0; }
+table { width: 100%; border-collapse: collapse; }
+th { text-align: left; padding: 12px 24px; font-size: 12px; text-transform: uppercase; color: #888; letter-spacing: 0.5px; border-bottom: 2px solid #f0f0f0; }
+td { padding: 12px 24px; font-size: 14px; border-bottom: 1px solid #f5f5f5; }
+.test-name { font-weight: 500; max-width: 500px; word-break: break-word; }
+.row-failed { background: #fff5f5; cursor: pointer; }
+.row-passed { cursor: pointer; }
+.row-passed:hover { background: #f8f9fc; }
+.row-failed:hover { background: #ffebeb; }
+.badge { display: inline-block; padding: 3px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+.badge.pass { background: #e8f5e9; color: #2e7d32; }
+.badge.fail { background: #ffebee; color: #c62828; }
+.badge.skip { background: #fff3e0; color: #e65100; }
+.error-block { background: #2d2d2d; color: #ff6b6b; padding: 16px 24px; margin: 8px 24px 16px; border-radius: 8px; overflow-x: auto; }
+.error-block pre { font-family: 'Fira Code', 'Consolas', monospace; font-size: 13px; white-space: pre-wrap; }
+.error-block .trace { color: #aaa; margin-top: 8px; }
+.footer { text-align: center; padding: 40px; color: #aaa; font-size: 13px; }
+.summary-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; padding: 24px; }
+
+@media (max-width: 768px) {
+  .stats { flex-direction: column; padding: 20px; }
+  .container { padding: 20px; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🔬 API 自动化测试报告</h1>
+  <div class="subtitle">
+    执行时间: 2026-05-28 18:44:58 &nbsp;|&nbsp;
+    被测系统: JSONPlaceholder + DummyJSON &nbsp;|&nbsp;
+    框架: Python + Pytest + Requests
+  </div>
+</div>
+
+<div class="stats">
+  <div class="stat-card total">
+    <div class="number">26</div>
+    <div class="label">总用例数</div>
+  </div>
+  <div class="stat-card pass">
+    <div class="number">26</div>
+    <div class="label">通过</div>
+  </div>
+  <div class="stat-card fail">
+    <div class="number">0</div>
+    <div class="label">失败</div>
+  </div>
+  <div class="stat-card" style="min-width:120px">
+    <div class="ring-wrap">
+      <div class="ring">
+        <svg viewBox="0 0 120 120">
+          <circle class="bg" cx="60" cy="60" r="52"/>
+          <circle class="fg" cx="60" cy="60" r="52"
+            stroke-dasharray="326.73 326.73"/>
+        </svg>
+        <div class="inner">100.0%</div>
+      </div>
+    </div>
+    <div class="label" style="margin-top:8px">通过率</div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="section">
+    <h2>📊 测试套件概览</h2>
+    <table>
+      <thead><tr><th>测试文件</th><th>用例数</th></tr></thead>
+      <tbody><tr><td>tests</td><td>26</td></tr></tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>📋 测试用例详情</h2>
+    <table>
+      <thead><tr><th style="width:40px"></th><th>用例名称</th><th>模块</th><th style="width:80px">耗时</th><th style="width:100px">状态</th></tr></thead>
+      <tbody>
+        <tr class="row-passed" onclick="toggleError('err-1001904634')">
+            <td>✅</td>
+            <td class="test-name">PATCH /posts/1 局部更新文章标题</td>
+            <td>JSONPlaceholder - 文章接口</td>
+            <td>0.00s</td>
+            <td><span class="badge pass">PASSED</span></td>
+        </tr>
+        <tr class="row-passed" onclick="toggleError('err-251116469')">
+            <td>✅</td>
+            <td class="test-name">参数化：查询用户 id=5</td>
+            <td>DummyJSON - 用户 CRUD 接口</td>
+            <td>0.00s</td>
+            <td><span class="badge pass">PASSED</span></td>
+        </tr>
+        <tr class="row-passed" onclick="toggleError('err-1430410279')">
+            <td>✅</td>
+            <td class="test-name">参数化：批量查询文章 id=10</td>
+            <td>JSONPlaceholder - 文章接口</td>
+            <td>0.00s</td>
+            <td><span class="badge pass">PASSED</span></td>
+        </tr>
+        <tr class="row-passed" onclick="toggleError('err-260030343')">
+            <td>✅</td>
+            <td class="test-name">GET /users/search?q=Emily 搜索用户返回结果</td>
+            <td>DummyJSON - 用户 CRUD 接口</td>
+            <td>0.00s</td>
+            <td><span class="badge pass">PASSED</span></td>
+        </tr>
+        <tr class="row-passed" onclick="toggleError('err-158634237')">
+            <td>✅</td>
+            <td class="test-name">GET /users 返回用户列表，total>0</td>
+            <td>DummyJSON - 用户 CRUD 接口</td>
+            <td>0.00s</td>
+            <td><span class="badge pass">PASSED</span></td>
+        </tr>
+        <tr class="row-passed" onclick="toggleError('err-1430410279')">
+            <td>✅</td>
+            <td class="test-name">参数化：批量查询文章 id=5</td>
+            <td>JSONPlaceholder - 文章接口</td>
+            <td>0.00s</td>
+            <td><span class="badge pass">PASSED</span></td>
+        </tr>
+        <tr class="row-passed" onclick="toggleError('err-1798191156')">
+            <td>✅</td>
+            <td class="test-name">GET /auth/me 使用 token 获取当前用户信息</td>
+            <td>DummyJSON - 用户鉴权接口</td>
+            <td>0.00s</td>
+            <td><span class="badge pass">PASSED</span></td>
+        </tr>
+        <tr class="row-passed" onclick="toggleError('err-417785258')">
+            <td>✅</td>
+            <td class="test-name">GET /users/9999 应返回 404</td>
+            <td>DummyJSON - 用户 CRUD 接口</td>
+            <td>0.00s</td>
+            <td><span class="badge pass">PASSED</span></td>
+        </tr>
+        <tr class="row-passed" onclick="toggleError('err-251116469')">
+            <td>✅</td>
+            <td class="test-name">参数化：查询用户 id=2</td>
+            <td>DummyJSON - 用户 CRUD 接口</td>
+            <td>0.00s</td>
+            <td><span class="badge pass">PASSED</span></td>
+        </tr>
+        <tr class="row-passed" onclick="toggleError('err-2074332825')">
+            <td>✅</td>
+            <td class="test-name">GET /posts 应返回 100 条数据且包含必要字段</td>
+            <td>JSONPlaceholder - 文章接口</td>
+            <td>0.00s</td>
+            <td><span class="badge pass">PASSED</span></td>
+        </tr>
+        <tr class="row-passed" onclick="toggleError('err-446444843')">
+            <td>✅</td>
+            <td class="test-name">PUT /posts/1 全量更新文章</td>
+            <td>JSONPlaceholder - 文章接口</td>
+            <td>0.00s</td>
+            <td><span class="badge pass">PASSED</span></td>
+        </tr>
+        <tr class="row-passed" onclick="toggleError('err-1172733028')">
+            <td>✅</td>
+            <td class="test-name">GET /posts/1 返回 id=1 的正确数据</td>
+            <td>JSONPlaceholder - 文章接口</td>
+            <td>0.00s</td>
+            <td><span class="badge pass">PASSED</span></td>
+        </tr>
+        <tr class="row-passed" onclick="toggleError('err-523453215')">
+            <td>✅</td>
+            <td class="test-name">PUT /users/1 全量更新用户信息</td>
+            <td>DummyJSON - 用户 CRUD 接口</td>
+            <td>0.00s</td>
+            <td><span class="badge pass">PASSED</span></td>
+        </tr>
+        <tr class="row-passed" onclick="toggleError('err-900143462')">
+            <td>✅</td>
+            <td class="test-name">POST /posts 创建新文章返回 201</td>
+            <td>JSONPlaceholder - 文章接口</td>
+            <td>0.00s</td>
+            <td><span class="badge pass">PASSED</span></td>
+        </tr>
+        <tr class="row-passed" onclick="toggleError('err-1430410279')">
+            <td>✅</td>
+            <td class="test-name">参数化：批量查询文章 id=1</td>
+            <td>JSONPlaceholder - 文章接口</td>
+            <td>0.00s</td>
+            <td><span class="badge pass">PASSED</span></td>
+        </tr>
+        <tr class="row-passed" onclick="toggleError('err-295992490')">
+            <td>✅</td>
+            <td class="test-name">POST /auth/login 有效凭据返回 token</td>
+            <td>DummyJSON - 用户鉴权接口</td>
+            <td>0.00s</td>
+            <td><span class="badge pass">PASSED</span></td>
+        </tr>
+        <tr class="row-passed" onclick="toggleError('err-38719289')">
+            <td>✅</td>
+            <td class="test-name">DELETE /users/1 删除用户返回 200 且含 isDeleted 字段</td>
+            <td>DummyJSON - 用户 CRUD 接口</td>
+            <td>0.00s</td>
+            <td><span class="badge pass">PASSED</span></td>
+        </tr>
+        <tr class="row-passed" onclick="toggleError('err-126896131')">
+            <td>✅</td>
+            <td class="test-name">GET /users/1 返回 id=1 的用户信息</td>
+            <td>DummyJSON - 用户 CRUD 接口</td>
+            <td>0.00s</td>
+            <td><span class="badge pass">PASSED</span></td>
+        </tr>
+        <tr class="row-passed" onclick="toggleError('err-1441048749')">
+            <td>✅</td>
+            <td class="test-name">POST /auth/login 无效凭据返回 400</td>
+            <td>DummyJSON - 用户鉴权接口</td>
+            <td>0.00s</td>
+            <td><span class="badge pass">PASSED</span></td>
+        </tr>
+        <tr class="row-passed" onclick="toggleError('err-1652001564')">
+            <td>✅</td>
+            <td class="test-name">DELETE /posts/1 删除文章返回 200</td>
+            <td>JSONPlaceholder - 文章接口</td>
+            <td>0.00s</td>
+            <td><span class="badge pass">PASSED</span></td>
+        </tr>
+        <tr class="row-passed" onclick="toggleError('err-569366344')">
+            <td>✅</td>
+            <td class="test-name">GET /posts/1/comments 返回属于 postId=1 的评论</td>
+            <td>JSONPlaceholder - 文章接口</td>
+            <td>0.00s</td>
+            <td><span class="badge pass">PASSED</span></td>
+        </tr>
+        <tr class="row-passed" onclick="toggleError('err-1430410279')">
+            <td>✅</td>
+            <td class="test-name">参数化：批量查询文章 id=50</td>
+            <td>JSONPlaceholder - 文章接口</td>
+            <td>0.00s</td>
+            <td><span class="badge pass">PASSED</span></td>
+        </tr>
+        <tr class="row-passed" onclick="toggleError('err-251116469')">
+            <td>✅</td>
+            <td class="test-name">参数化：查询用户 id=1</td>
+            <td>DummyJSON - 用户 CRUD 接口</td>
+            <td>0.00s</td>
+            <td><span class="badge pass">PASSED</span></td>
+        </tr>
+        <tr class="row-passed" onclick="toggleError('err-1430410279')">
+            <td>✅</td>
+            <td class="test-name">参数化：批量查询文章 id=100</td>
+            <td>JSONPlaceholder - 文章接口</td>
+            <td>0.00s</td>
+            <td><span class="badge pass">PASSED</span></td>
+        </tr>
+        <tr class="row-passed" onclick="toggleError('err-726160297')">
+            <td>✅</td>
+            <td class="test-name">POST /users/add 创建新用户并返回 id</td>
+            <td>DummyJSON - 用户 CRUD 接口</td>
+            <td>0.00s</td>
+            <td><span class="badge pass">PASSED</span></td>
+        </tr>
+        <tr class="row-passed" onclick="toggleError('err-251116469')">
+            <td>✅</td>
+            <td class="test-name">参数化：查询用户 id=10</td>
+            <td>DummyJSON - 用户 CRUD 接口</td>
+            <td>0.00s</td>
+            <td><span class="badge pass">PASSED</span></td>
+        </tr></tbody>
+    </table>
+  </div>
+</div>
+
+<div class="footer">
+  Generated by Allure-Style Report Builder &nbsp;|&nbsp; Pytest + Requests &nbsp;|&nbsp; 2026
+</div>
+
+<script>
+function toggleError(id) {
+  const el = document.getElementById(id);
+  if (el) el.style.display = el.style.display === 'none' ? 'table-row' : 'none';
+}
+</script>
+
+</body>
+</html>
