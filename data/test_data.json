@@ -1,0 +1,16 @@
+{
+  "create_post": {
+    "title": "接口自动化测试文章",
+    "body": "这是通过自动化测试创建的文章内容",
+    "userId": 1
+  },
+  "post_ids_valid": [1, 2, 3, 10, 50],
+  "login_valid": {
+    "username": "emilys",
+    "password": "emilyspass"
+  },
+  "login_invalid": {
+    "username": "not_exist_user_xyz",
+    "password": "wrong_password_123"
+  }
+}
